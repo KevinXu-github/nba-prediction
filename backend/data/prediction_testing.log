@@ -1,0 +1,10 @@
+2025-02-27 01:15:37,203 - __main__ - INFO - Testing model predictions
+2025-02-27 01:15:37,208 - __main__ - INFO - Loaded 1246 test samples
+2025-02-27 01:15:37,373 - __main__ - INFO - Loaded model from ../data/models/nba_overunder_model_latest.joblib
+2025-02-27 01:15:37,449 - __main__ - INFO - Test Results - Accuracy: 0.5706, Precision: 0.5879, Recall: 0.7776, F1: 0.6695
+2025-02-27 01:15:37,466 - __main__ - INFO - Saved predictions to ../data/training/model_predictions_20250227_011537.csv
+2025-02-27 01:15:37,466 - __main__ - INFO - Performance by confidence level:
+2025-02-27 01:15:37,468 - __main__ - INFO - Confidence 0.5-0.6: 754 predictions, Accuracy: 0.5345
+2025-02-27 01:15:37,470 - __main__ - INFO - Confidence 0.6-0.7: 372 predictions, Accuracy: 0.6075
+2025-02-27 01:15:37,471 - __main__ - INFO - Confidence 0.7-0.8: 111 predictions, Accuracy: 0.6847
+2025-02-27 01:15:37,472 - __main__ - INFO - Confidence 0.8-0.9: 9 predictions, Accuracy: 0.6667

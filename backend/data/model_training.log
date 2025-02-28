@@ -1,0 +1,15 @@
+2025-02-27 01:15:32,857 - __main__ - INFO - Starting model training process
+2025-02-27 01:15:32,891 - __main__ - INFO - Loaded 4982 training samples and 1246 testing samples
+2025-02-27 01:15:32,900 - __main__ - INFO - Saved feature scaler to ../data/models/scaler.joblib
+2025-02-27 01:15:32,900 - __main__ - INFO - Training and evaluating multiple models
+2025-02-27 01:15:32,902 - __main__ - INFO - Training RandomForest model
+2025-02-27 01:15:33,960 - __main__ - INFO - RandomForest - Accuracy: 0.5706, Precision: 0.5879, Recall: 0.7776, F1: 0.6695
+2025-02-27 01:15:33,962 - __main__ - INFO - Training GradientBoosting model
+2025-02-27 01:15:35,497 - __main__ - INFO - GradientBoosting - Accuracy: 0.5650, Precision: 0.5949, Recall: 0.6973, F1: 0.6420
+2025-02-27 01:15:35,498 - __main__ - INFO - Training XGBoost model
+2025-02-27 01:15:35,884 - __main__ - INFO - XGBoost - Accuracy: 0.5618, Precision: 0.5936, Recall: 0.6872, F1: 0.6370
+2025-02-27 01:15:35,886 - __main__ - INFO - Best model: RandomForest with accuracy 0.5706
+2025-02-27 01:15:36,006 - __main__ - INFO - Saved best model to ../data/models/nba_overunder_model_RandomForest_20250227_011535.joblib
+2025-02-27 01:15:36,012 - __main__ - INFO - Saved model metrics to ../data/models/model_metrics_20250227_011535.json
+2025-02-27 01:15:36,015 - __main__ - INFO - Created copy of latest model at ../data/models/nba_overunder_model_latest.joblib
+2025-02-27 01:15:36,015 - __main__ - INFO - Model training completed successfully

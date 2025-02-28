@@ -1,0 +1,30 @@
+{
+    "model_name": "RandomForest",
+    "timestamp": "20250227_011535",
+    "accuracy": 0.5706260032102729,
+    "precision": 0.5878524945770065,
+    "recall": 0.7776183644189383,
+    "f1": 0.669549104385423,
+    "confusion_matrix": [
+        [
+            169,
+            380
+        ],
+        [
+            155,
+            542
+        ]
+    ],
+    "features": [
+        "HomeTeamWins",
+        "HomeTeamLosses",
+        "AwayTeamWins",
+        "AwayTeamLosses",
+        "HomeTeamPointsPerGame",
+        "HomeTeamPointsAllowedPerGame",
+        "AwayTeamPointsPerGame",
+        "AwayTeamPointsAllowedPerGame",
+        "HomeTeamInjuries",
+        "AwayTeamInjuries"
+    ]
+}

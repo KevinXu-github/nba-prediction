@@ -1,0 +1,8 @@
+2025-02-27 01:13:50,675 - __main__ - INFO - Starting NBA Parlay Prediction pipeline
+2025-02-27 01:13:50,676 - __main__ - INFO - Step 1: Fetching historical NBA data
+2025-02-27 01:15:31,628 - __main__ - INFO - Historical data collection completed
+2025-02-27 01:15:31,628 - __main__ - INFO - Step 2: Training prediction model
+2025-02-27 01:15:36,148 - __main__ - INFO - Model training completed
+2025-02-27 01:15:36,148 - __main__ - INFO - Step 3: Testing model predictions
+2025-02-27 01:15:37,568 - __main__ - INFO - Prediction testing completed
+2025-02-27 01:15:37,568 - __main__ - INFO - Pipeline completed successfully in 0h 1m 46s

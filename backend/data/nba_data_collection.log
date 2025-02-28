@@ -1,0 +1,23 @@
+2025-02-27 01:13:51,739 - __main__ - INFO - Fetching games for season 2018-19
+2025-02-27 01:13:52,681 - __main__ - INFO - Processing 1394 home games
+2025-02-27 01:14:10,420 - __main__ - INFO - Processed 1305 games for season 2018-19
+2025-02-27 01:14:10,440 - __main__ - INFO - Saved 1305 games for season 2018-19
+2025-02-27 01:14:12,441 - __main__ - INFO - Fetching games for season 2019-20
+2025-02-27 01:14:13,560 - __main__ - INFO - Processing 1258 home games
+2025-02-27 01:14:29,447 - __main__ - INFO - Processed 1167 games for season 2019-20
+2025-02-27 01:14:29,464 - __main__ - INFO - Saved 1167 games for season 2019-20
+2025-02-27 01:14:31,469 - __main__ - INFO - Fetching games for season 2020-21
+2025-02-27 01:14:32,657 - __main__ - INFO - Processing 1221 home games
+2025-02-27 01:14:48,072 - __main__ - INFO - Processed 1139 games for season 2020-21
+2025-02-27 01:14:48,094 - __main__ - INFO - Saved 1139 games for season 2020-21
+2025-02-27 01:14:50,096 - __main__ - INFO - Fetching games for season 2021-22
+2025-02-27 01:14:51,212 - __main__ - INFO - Processing 1394 home games
+2025-02-27 01:15:09,031 - __main__ - INFO - Processed 1310 games for season 2021-22
+2025-02-27 01:15:09,048 - __main__ - INFO - Saved 1310 games for season 2021-22
+2025-02-27 01:15:11,048 - __main__ - INFO - Fetching games for season 2022-23
+2025-02-27 01:15:11,790 - __main__ - INFO - Processing 1395 home games
+2025-02-27 01:15:29,421 - __main__ - INFO - Processed 1307 games for season 2022-23
+2025-02-27 01:15:29,439 - __main__ - INFO - Saved 1307 games for season 2022-23
+2025-02-27 01:15:31,560 - __main__ - INFO - Data collection complete. Total games: 6228
+2025-02-27 01:15:31,560 - __main__ - INFO - Training set: 4982 games
+2025-02-27 01:15:31,561 - __main__ - INFO - Testing set: 1246 games
