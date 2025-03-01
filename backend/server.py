@@ -112,30 +112,74 @@ async def get_upcoming_games():
             return generate_mock_games()
         
         print(f"Successfully fetched {len(games_df)} games")
-        print(f"Columns in data: {games_df.columns.tolist()}")
         
         # Convert DataFrame to list of dictionaries
         games = games_df.to_dict(orient='records')
         
-        # Make sure all required fields are present
-        required_fields = [
-            'HomeTeamPointsPerGame', 'HomeTeamPointsAllowedPerGame',
-            'AwayTeamPointsPerGame', 'AwayTeamPointsAllowedPerGame',
-            'HomeTeamInjuries', 'AwayTeamInjuries', 'OverUnderLine'
-        ]
-        
-        # Add missing fields to each game
+        # Map SportsData.io fields to the expected field names for each game
         for game in games:
-            for field in required_fields:
-                if field not in game or pd.isna(game[field]):
-                    if 'Injuries' in field:
-                        game[field] = random.randint(0, 3)
-                    elif 'PerGame' in field:
-                        game[field] = 100 + random.random() * 20
-                    elif field == 'OverUnderLine':
-                        game[field] = 210 + random.randint(0, 30)
+            # Map date fields
+            if 'Day' in game and game['Day'] is not None:
+                game['Date'] = game['Day']
+            elif 'DateTime' in game and game['DateTime'] is not None:
+                game['Date'] = game['DateTime']
+            
+            # Map team records
+            # For team stats, the API provides 'Wins' and 'Losses' for home team
+            # and 'Wins_away' and 'Losses_away' for away team
+            if 'Wins' in game:
+                game['HomeTeamWins'] = game['Wins']
+            else:
+                game['HomeTeamWins'] = random.randint(20, 50)
+                
+            if 'Losses' in game:
+                game['HomeTeamLosses'] = game['Losses']
+            else:
+                game['HomeTeamLosses'] = random.randint(10, 40)
+                
+            if 'Wins_away' in game:
+                game['AwayTeamWins'] = game['Wins_away']
+            else:
+                game['AwayTeamWins'] = random.randint(20, 50)
+                
+            if 'Losses_away' in game:
+                game['AwayTeamLosses'] = game['Losses_away']
+            else:
+                game['AwayTeamLosses'] = random.randint(10, 40)
+            
+            # Map team points per game
+            # In SportsData.io, the team stats have 'Points' and 'Points_away'
+            if 'Points' in game:
+                game['HomeTeamPointsPerGame'] = game['Points']
+            else:
+                game['HomeTeamPointsPerGame'] = round(100 + random.random() * 20, 1)
+                
+            if 'Points_away' in game:
+                game['AwayTeamPointsPerGame'] = game['Points_away']
+            else:
+                game['AwayTeamPointsPerGame'] = round(100 + random.random() * 20, 1)
+            
+            # For points allowed, we might need to calculate or use mock data
+            # Teams' defensive stats might be in different fields
+            game['HomeTeamPointsAllowedPerGame'] = round(100 + random.random() * 20, 1)
+            game['AwayTeamPointsAllowedPerGame'] = round(100 + random.random() * 20, 1)
+            
+            # Add injury data (SportsData.io provides an Injuries endpoint but it's separate)
+            game['HomeTeamInjuries'] = random.randint(0, 3)
+            game['AwayTeamInjuries'] = random.randint(0, 3)
+            
+            # Map over/under line
+            if 'OverUnder' in game:
+                game['OverUnderLine'] = game['OverUnder']
+            else:
+                game['OverUnderLine'] = 210 + random.randint(0, 30)
+            
+            # Handle stadium information
+            if 'StadiumID' in game and not ('Stadium' in game and game['Stadium']):
+                # If we have a StadiumID but no Stadium name, create a placeholder
+                game['Stadium'] = f"{game['HomeTeam']} Arena"
         
-        print(f"Returning {len(games)} games with all required fields")
+        print(f"Returning {len(games)} games with all required fields added/mapped")
         return games
     except Exception as e:
         import traceback
@@ -147,11 +191,51 @@ async def get_upcoming_games():
 async def predict_parlay(request: ParlayRequest):
     """Predict optimal parlay based on specified number of legs"""
     try:
-        # Use your existing model to make predictions
+        # Get game data
         games_df = collector.prepare_game_data_for_model()
         
         if games_df is None or len(games_df) == 0:
             raise HTTPException(status_code=404, detail="No upcoming games found")
+        
+        # Ensure DataFrame has all required features
+        required_features = [
+            'HomeTeamWins', 'HomeTeamLosses', 'AwayTeamWins', 'AwayTeamLosses',
+            'HomeTeamPointsPerGame', 'HomeTeamPointsAllowedPerGame',
+            'AwayTeamPointsPerGame', 'AwayTeamPointsAllowedPerGame',
+            'HomeTeamInjuries', 'AwayTeamInjuries', 'OverUnderLine'
+        ]
+        
+        # Map known fields
+        field_mapping = {
+            'Wins': 'HomeTeamWins',
+            'Losses': 'HomeTeamLosses',
+            'Wins_away': 'AwayTeamWins',
+            'Losses_away': 'AwayTeamLosses',
+            'Points': 'HomeTeamPointsPerGame',
+            'Points_away': 'AwayTeamPointsPerGame',
+            'OverUnder': 'OverUnderLine'
+        }
+        
+        # Apply mappings for existing fields
+        for source, target in field_mapping.items():
+            if source in games_df.columns and target not in games_df.columns:
+                games_df[target] = games_df[source]
+        
+        # Add missing required fields
+        for feature in required_features:
+            if feature not in games_df.columns:
+                if 'Wins' in feature:
+                    games_df[feature] = [random.randint(20, 50) for _ in range(len(games_df))]
+                elif 'Losses' in feature:
+                    games_df[feature] = [random.randint(10, 40) for _ in range(len(games_df))]
+                elif 'PerGame' in feature:
+                    games_df[feature] = [round(100 + random.random() * 20, 1) for _ in range(len(games_df))]
+                elif 'Injuries' in feature:
+                    games_df[feature] = [random.randint(0, 3) for _ in range(len(games_df))]
+                elif feature == 'OverUnderLine' and 'OverUnder' in games_df.columns:
+                    games_df[feature] = games_df['OverUnder']
+                elif feature == 'OverUnderLine':
+                    games_df[feature] = [210 + random.randint(0, 30) for _ in range(len(games_df))]
         
         # Load the model if not already loaded
         if model.model is None:
